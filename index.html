@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Buobey - Üretim ve Barkod Paneli</title>
+  <title>Buobey - Barkod ve Envanter Portalı</title>
   
   <!-- Barkod ve PDF Kütüphaneleri -->
   <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
@@ -66,7 +66,7 @@
       margin-bottom: 6px;
     }
 
-    input, textarea {
+    input, textarea, select {
       width: 100%;
       padding: 12px 14px;
       border-radius: 10px;
@@ -78,7 +78,7 @@
       transition: all 0.2s;
     }
 
-    input:focus, textarea:focus {
+    input:focus, textarea:focus, select:focus {
       border-color: #38bdf8;
       box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
     }
@@ -117,7 +117,7 @@
     .dashboard-container {
       display: none;
       width: 100%;
-      max-width: 1000px;
+      max-width: 1050px;
     }
 
     .dash-header {
@@ -142,7 +142,7 @@
       background: transparent;
       border: none;
       color: #94a3b8;
-      padding: 10px 16px;
+      padding: 10px 18px;
       border-radius: 8px;
       cursor: pointer;
       font-weight: 600;
@@ -167,19 +167,20 @@
 
     .barcode-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
       gap: 15px;
       margin-top: 20px;
     }
 
     .barcode-item {
       background: #ffffff;
-      padding: 12px;
+      padding: 14px;
       border-radius: 10px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
     }
 
     .barcode-item canvas {
@@ -187,17 +188,16 @@
       height: auto;
     }
 
-    /* İstatistik sayaçları */
     .stats-row {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 15px;
       margin-bottom: 20px;
     }
 
     .stat-box {
       background: #1e293b;
-      padding: 15px 20px;
+      padding: 16px 20px;
       border-radius: 12px;
       border-left: 4px solid #38bdf8;
     }
@@ -216,7 +216,6 @@
       margin-top: 4px;
     }
 
-    /* 2. Sekmedeki Kayıt Kartları */
     .record-card {
       background: #1e293b;
       border-radius: 14px;
@@ -274,6 +273,123 @@
       flex-wrap: wrap;
     }
 
+    /* Modal / Açılır Düzenleme Penceresi */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(4px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+
+    .modal-content {
+      background: #1e293b;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 550px;
+      padding: 24px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    }
+
+    .modal-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      max-height: 200px;
+      overflow-y: auto;
+      margin: 15px 0;
+      padding: 10px;
+      background: #0f172a;
+      border-radius: 8px;
+    }
+
+    .modal-chip {
+      background: #334155;
+      color: #fff;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .modal-chip span {
+      cursor: pointer;
+      color: #f87171;
+      font-weight: bold;
+    }
+
+    /* Zaman Çizelgesi (Changelog) */
+    .timeline {
+      position: relative;
+      padding-left: 30px;
+      margin-top: 20px;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 8px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: #334155;
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 25px;
+    }
+
+    .timeline-badge {
+      position: absolute;
+      left: -28px;
+      top: 2px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #0284c7;
+      border: 3px solid #0f172a;
+    }
+
+    .timeline-badge.current {
+      background: #10b981;
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.6);
+    }
+
+    .timeline-content {
+      background: #1e293b;
+      padding: 16px 20px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .timeline-content h4 {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #38bdf8;
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+    }
+
+    .timeline-content ul {
+      list-style-type: disc;
+      padding-left: 20px;
+      color: #cbd5e1;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
     .empty-state {
       text-align: center;
       padding: 40px;
@@ -310,8 +426,8 @@
     <div class="dash-header">
       <div class="nav-tabs">
         <button class="tab-btn active" onclick="sekmeDegistir('barkodTab', this)">1. Barkod Üretici</button>
-        <button class="tab-btn" onclick="sekmeDegistir('yapimTab', this)" id="btnYapimSekmesi">2. Yapım Aşaması</button>
-        <button class="tab-btn" onclick="sekmeDegistir('yapisTab', this)">3. Yapış Aşaması</button>
+        <button class="tab-btn" onclick="sekmeDegistir('kayitliTab', this)" id="btnKayitliSekmesi">2. Kayıtlı Barkodlar</button>
+        <button class="tab-btn" onclick="sekmeDegistir('guncellemeTab', this)">3. Güncellemeler (v3)</button>
       </div>
       <button class="btn btn-secondary" onclick="cikisYap()">Çıkış Yap</button>
     </div>
@@ -321,14 +437,14 @@
       <div class="card">
         <h3 style="color: #38bdf8; margin-bottom: 6px;">Hızlı Barkod Üretimi</h3>
         <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 15px;">
-          Numaraları aralarında boşluk bırakarak veya alt alta yazın (Örnek: 123 456 789).
+          Numaraları aralarında boşluk bırakarak veya alt alta yazın (Örnek: 123456 789012 345678).
         </p>
 
         <textarea id="barcodeInput" rows="3" placeholder="Numaraları buraya girin..." oninput="barkodlariUret()"></textarea>
         
         <div class="btn-row">
-          <button class="btn btn-success" onclick="anlikPdfIndir()">PDF Olarak İndir</button>
-          <button class="btn btn-primary" onclick="yapimAsamasinaKaydet()">Yapım Aşamasına Kaydet</button>
+          <button class="btn btn-success" onclick="anlikPdfIndir()">Yüksek Kalite PDF İndir</button>
+          <button class="btn btn-primary" onclick="kayitlaraEkle()">Kayıtlı Barkodlara Ekle</button>
           <button class="btn btn-secondary" onclick="ornekDoldur()">Örnek Numaralar Ekle</button>
           <button class="btn btn-secondary" onclick="temizle()">Temizle</button>
         </div>
@@ -337,15 +453,15 @@
       </div>
     </div>
 
-    <!-- 2. SEKME: YAPIM AŞAMASI (KAYITLAR VE TAKİP) -->
-    <div id="yapimTab" class="tab-content">
+    <!-- 2. SEKME: KAYITLI BARKODLAR -->
+    <div id="kayitliTab" class="tab-content">
       <div class="stats-row">
         <div class="stat-box">
-          <span>Toplam Kayıt Grubu</span>
+          <span>Toplam Parti Sayısı</span>
           <strong id="statGrupSayisi">0</strong>
         </div>
         <div class="stat-box" style="border-left-color: #10b981;">
-          <span>Üretilen Toplam Barkod</span>
+          <span>Sistemdeki Toplam Barkod</span>
           <strong id="statBarkodSayisi">0</strong>
         </div>
       </div>
@@ -353,30 +469,104 @@
       <div class="card">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
           <div>
-            <h3 style="color: #38bdf8;">Yapım Aşaması / Kayıtlı Barkodlar</h3>
-            <p style="color: #94a3b8; font-size: 0.85rem;">Kaydedilen partileri inceleyebilir, indirebilir veya yeniden düzenleyebilirsiniz.</p>
+            <h3 style="color: #38bdf8;">Kayıt Arşivi</h3>
+            <p style="color: #94a3b8; font-size: 0.85rem;">Daha önce kaydettiğiniz barkod partilerini inceleyin, düzenleyin ve PDF indirin.</p>
           </div>
-          <button class="btn btn-danger" style="font-size: 0.8rem;" onclick="tumunuTemizle()">Tüm Kayıtları Sıfırla</button>
+          <button class="btn btn-danger" style="font-size: 0.8rem;" onclick="tumunuTemizle()">Tümünü Sıfırla</button>
         </div>
 
-        <input type="text" id="aramaKutusu" placeholder="Tarih veya numara ile ara..." oninput="kayitlariFiltrele()" style="margin-bottom: 15px;">
+        <input type="text" id="aramaKutusu" placeholder="Tarih veya numara ile arayın..." oninput="kayitlariFiltrele()" style="margin-bottom: 15px;">
 
         <div id="recordsContainer"></div>
       </div>
     </div>
 
-    <!-- 3. SEKME: YAPIŞ AŞAMASI -->
-    <div id="yapisTab" class="tab-content">
-      <div class="card empty-state">
-        <h3 style="color: #38bdf8; margin-bottom: 10px;">3. Yapış Aşaması</h3>
-        <p>Burası montaj, barkod yapıştırma ve paketleme kontrol aşaması için ayrılmıştır.</p>
+    <!-- 3. SEKME: GÜNCELLEMELER (CHANGELOG) -->
+    <div id="guncellemeTab" class="tab-content">
+      <div class="card">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <h3 style="color: #38bdf8;">Sürüm ve Güncelleme Geçmişi</h3>
+          <span style="background: #10b981; color: #fff; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: bold;">Son Sürüm: v3.0</span>
+        </div>
+        <p style="color: #94a3b8; font-size: 0.85rem; margin-top: 4px;">Platformun ilk kurulumdan itibaren geçirdiği tüm yenilikler:</p>
+
+        <div class="timeline">
+          <!-- Versiyon 3 -->
+          <div class="timeline-item">
+            <div class="timeline-badge current"></div>
+            <div class="timeline-content">
+              <h4>
+                <span>Sürüm 3.0 (Optimizasyon & Raporlama)</span>
+                <span style="font-size: 0.75rem; color: #10b981;">Aktif Versiyon</span>
+              </h4>
+              <ul>
+                <li><strong>El Terminali İçin Yüksek Çözünürlüklü PDF:</strong> Barkodlar lazer okuyucuların hatasız okuması için çift sütunlu 300 DPI netliğinde etiket ızgarasına dönüştürüldü.</li>
+                <li><strong>Yerinde (In-Place) Düzenleme:</strong> Kayıtlı barkodları düzenlemek için 1. sayfaya yönlendirme kaldırıldı; doğrudan açılır pencere ile anında silme/ekleme modu getirildi.</li>
+                <li><strong>Yeni Menü Mimarisi:</strong> Menüler `Barkod Üretici`, `Kayıtlı Barkodlar` ve `Güncellemeler` olarak yapılandırıldı.</li>
+                <li><strong>Güvenlik Mesafesi (Quiet Zone):</strong> El terminaliyle okuturken üstteki veya alttaki barkodun karışmaması için etiketlere koruma çerçevesi ve sıra numarası entegre edildi.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Versiyon 2 -->
+          <div class="timeline-item">
+            <div class="timeline-badge"></div>
+            <div class="timeline-content">
+              <h4>
+                <span>Sürüm 2.0 (Çoklu Üretim & Kayıt)</span>
+                <span style="font-size: 0.75rem; color: #94a3b8;">Arşiv</span>
+              </h4>
+              <ul>
+                <li>JsBarcode ve jsPDF entegrasyonu sağlandı.</li>
+                <li>Boşluklu numaralarla anlık çoklu barkod üretimi eklendi.</li>
+                <li>Tarayıcı yerel hafızasına (LocalStorage) tarih/saat damgalı kayıt desteği sunuldu.</li>
+                <li>Toplam üretilen barkod sayaçları ve arama filtreleme özellikleri eklendi.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Versiyon 1 -->
+          <div class="timeline-item">
+            <div class="timeline-badge"></div>
+            <div class="timeline-content">
+              <h4>
+                <span>Sürüm 1.0 (Temel Kurulum)</span>
+                <span style="font-size: 0.75rem; color: #94a3b8;">Arşiv</span>
+              </h4>
+              <ul>
+                <li>GitHub Pages üzerinde ücretsiz barındırma ve SSL korumalı canlı domain yapılandırıldı.</li>
+                <li>Modern koyu tema ve şifreli giriş ekranı tasarlandı.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
   </div>
 
+  <!-- YERİNDE DÜZENLEME MODALI -->
+  <div class="modal-overlay" id="editModal">
+    <div class="modal-content">
+      <h3 style="color: #38bdf8; margin-bottom: 6px;">Parti Düzenle</h3>
+      <p style="color: #94a3b8; font-size: 0.85rem;">Barkodları silmek için üzerlerindeki 'x' işaretine basın. Yeni numara eklemek için kutuyu kullanın.</p>
+
+      <div class="modal-chips" id="modalChipContainer"></div>
+
+      <div style="display: flex; gap: 8px; margin-top: 10px;">
+        <input type="text" id="modalNewNum" placeholder="Yeni numara yazın..." onkeydown="if(event.key==='Enter') modalNumaraEkle()">
+        <button class="btn btn-secondary" onclick="modalNumaraEkle()">Ekle</button>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+        <button class="btn btn-secondary" onclick="modalKapat()">İptal</button>
+        <button class="btn btn-success" onclick="modalKaydet()">Değişiklikleri Kaydet</button>
+      </div>
+    </div>
+  </div>
+
   <script>
-    // 1. KULLANICI GİRİŞ/ÇIKIŞ KONTROLÜ
+    // 1. GİRİŞ VE OTURUM YÖNETİMİ
     function girisYap() {
       const u = document.getElementById("username").value.trim();
       const p = document.getElementById("password").value.trim();
@@ -407,17 +597,17 @@
       document.getElementById(tabId).classList.add("active");
       if (btn) btn.classList.add("active");
 
-      if (tabId === "yapimTab") {
+      if (tabId === "kayitliTab") {
         kayitlariListele();
       }
     }
 
-    // 3. NUMARALARI AYIKLAMA (Boşluk, virgül, alt satır)
+    // 3. NUMARALARI TEMİZLEME VE PARSE
     function parseNumbers(input) {
       return input.split(/[\s,]+/).map(s => s.trim()).filter(s => s.length > 0);
     }
 
-    // 4. ANLIK BARKOD ÇİZİMİ (HTML5 Canvas ile)
+    // 4. ANLIK BARKOD ÇİZİMİ
     function barkodlariUret() {
       const raw = document.getElementById("barcodeInput").value;
       const numbers = parseNumbers(raw);
@@ -429,7 +619,6 @@
         item.className = "barcode-item";
 
         const canvas = document.createElement("canvas");
-        canvas.id = "barcode-canvas-" + index;
         item.appendChild(canvas);
         container.appendChild(item);
 
@@ -444,7 +633,7 @@
             background: "#ffffff"
           });
         } catch (e) {
-          item.innerHTML = `<span style="color:#ef4444; font-size:0.8rem;">Hatalı Barkod: ${val}</span>`;
+          item.innerHTML = `<span style="color:#ef4444; font-size:0.8rem;">Hata: ${val}</span>`;
         }
       });
     }
@@ -455,72 +644,130 @@
     }
 
     function ornekDoldur() {
-      document.getElementById("barcodeInput").value = "123456 789012 345678";
+      document.getElementById("barcodeInput").value = "100201 100202 100203 100204";
       barkodlariUret();
     }
 
-    // 5. GÜVENLİ VE GARANTİLİ PDF ÜRETİCİSİ
-    function pdfUretVeIndir(numaralar, dosyaAdi) {
+    // 5. EL TERMİNALİ UYUMLU, YÜKSEK ÇÖZÜNÜRLÜKLÜ ETİKET PDF MOTORU
+    function profesyonelPdfIndir(numaralar, baslik = "Barkod Etiket Listesi") {
       if (!numaralar || numaralar.length === 0) {
-        alert("İndirilecek geçerli barkod bulunamadı.");
+        alert("Lütfen önce geçerli bir numara girin.");
         return;
       }
 
       const { jsPDF } = window.jspdf;
       const pdf = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
-      
-      let y = 25;
-      pdf.setFontSize(16);
-      pdf.text("Buobey Barkod Listesi", 15, 15);
-      pdf.setFontSize(10);
-      pdf.text("Uretim Tarihi: " + new Date().toLocaleString("tr-TR"), 15, y);
-      pdf.text("Toplam Barkod: " + numaralar.length + " Adet", 150, y);
-      y += 10;
-      pdf.line(15, y, 195, y);
-      y += 10;
 
-      numaralar.forEach((num, i) => {
-        // Geçici gizli bir canvas oluşturup barkodu çiziyoruz
-        const tempCanvas = document.createElement("canvas");
+      const sayfaGenisligi = 210;
+      const sayfaYuksekligi = 297;
+      const solKenar = 14;
+      const sutunSayisi = 2;
+      const etiketGenislik = 86;
+      const etiketYukseklik = 36;
+      const sutunBoslugu = 10;
+      const satirBoslugu = 8;
+      const baslangicY = 28;
+
+      let aktifSutun = 0;
+      let aktifY = baslangicY;
+      let sayfaNo = 1;
+
+      function baslikCiz() {
+        pdf.setFillColor(15, 23, 42);
+        pdf.rect(0, 0, sayfaGenisligi, 18, "F");
+        pdf.setTextColor(255, 255, 255);
+        pdf.setFontSize(11);
+        pdf.setFont("helvetica", "bold");
+        pdf.text("BUOBEY BARKOD YONETIM SISTEMI", solKenar, 12);
+
+        pdf.setFontSize(8);
+        pdf.setFont("helvetica", "normal");
+        pdf.text("Tarih: " + new Date().toLocaleString("tr-TR"), sayfaGenisligi - solKenar - 50, 12);
+
+        pdf.setTextColor(30, 41, 59);
+        pdf.setFontSize(9);
+        pdf.text("Toplam: " + numaralar.length + " Adet Etiket", solKenar, 24);
+      }
+
+      baslikCiz();
+
+      numaralar.forEach((num, index) => {
+        // Yeni sayfa kontrolü
+        if (aktifY + etiketYukseklik > sayfaYuksekligi - 15) {
+          pdf.setFontSize(8);
+          pdf.setTextColor(100, 116, 139);
+          pdf.text("Sayfa " + sayfaNo, sayfaGenisligi / 2 - 5, sayfaYuksekligi - 6);
+          pdf.addPage();
+          sayfaNo++;
+          baslikCiz();
+          aktifY = baslangicY;
+          aktifSutun = 0;
+        }
+
+        const posX = solKenar + (aktifSutun * (etiketGenislik + sutunBoslugu));
+
+        // Etiket Çerçevesi (Kılavuz ve Lazer Kesim Kutusu)
+        pdf.setDrawColor(203, 213, 225);
+        pdf.setLineWidth(0.3);
+        pdf.setFillColor(255, 255, 255);
+        pdf.roundedRect(posX, aktifY, etiketGenislik, etiketYukseklik, 2, 2, "FD");
+
+        // Sıra Numarası Rozeti (#1, #2...)
+        pdf.setFillColor(241, 245, 249);
+        pdf.rect(posX + 1, aktifY + 1, 12, 5, "F");
+        pdf.setFontSize(7);
+        pdf.setTextColor(71, 85, 105);
+        pdf.text("#" + (index + 1), posX + 2.5, aktifY + 4.5);
+
+        // 300 DPI Yüksek Çözünürlüklü Vektörel Barkod Çizimi
+        const highResCanvas = document.createElement("canvas");
         try {
-          JsBarcode(tempCanvas, num, {
+          JsBarcode(highResCanvas, num, {
             format: "CODE128",
-            width: 2,
-            height: 50,
+            width: 3, // El terminali için kalın, net çizgiler
+            height: 60,
             displayValue: true,
-            fontSize: 14,
+            fontSize: 16,
+            textMargin: 4,
             background: "#ffffff"
           });
 
-          const imgData = tempCanvas.toDataURL("image/jpeg", 1.0);
-
-          if (y + 35 > 280) {
-            pdf.addPage();
-            y = 20;
-          }
-
-          pdf.addImage(imgData, "JPEG", 15, y, 65, 25);
-          y += 32;
+          const imgData = highResCanvas.toDataURL("image/png");
+          // Çerçeve içine ortalanmış barkod yerleşimi
+          pdf.addImage(imgData, "PNG", posX + 6, aktifY + 6, etiketGenislik - 12, etiketYukseklik - 9);
         } catch (err) {
-          console.error("Barkod çizim hatası:", err);
+          pdf.setTextColor(220, 38, 38);
+          pdf.text("Gecersiz: " + num, posX + 10, aktifY + 15);
+        }
+
+        // Sütun & Satır İlerlemesi
+        aktifSutun++;
+        if (aktifSutun >= sutunSayisi) {
+          aktifSutun = 0;
+          aktifY += etiketYukseklik + satirBoslugu;
         }
       });
 
-      pdf.save(dosyaAdi || ("barkodlar-" + Date.now() + ".pdf"));
+      // Son sayfa numarası
+      pdf.setFontSize(8);
+      pdf.setTextColor(100, 116, 139);
+      pdf.text("Sayfa " + sayfaNo, sayfaGenisligi / 2 - 5, sayfaYuksekligi - 6);
+
+      pdf.save("buobey-etiketler-" + Date.now() + ".pdf");
     }
 
     function anlikPdfIndir() {
       const numbers = parseNumbers(document.getElementById("barcodeInput").value);
-      pdfUretVeIndir(numbers, "buobey-anlik-barkodlar.pdf");
+      profesyonelPdfIndir(numbers, "Anlık Üretim");
     }
 
-    // 6. YAPIM AŞAMASINA KAYIT İŞLEMLERİ
-    function yapimAsamasinaKaydet() {
+    // 6. KAYITLI BARKODLAR VE İSTATİSTİK YÖNETİMİ
+    function kayitlaraEkle() {
       const raw = document.getElementById("barcodeInput").value;
       const numbers = parseNumbers(raw);
 
       if (numbers.length === 0) {
-        alert("Kaydedilecek en az 1 numara girmelisiniz.");
+        alert("Lütfen kaydedilecek en az bir numara girin.");
         return;
       }
 
@@ -530,22 +777,18 @@
         numaralar: numbers
       };
 
-      let kayitlar = JSON.parse(localStorage.getItem("buobey_yapim_kayitlari") || "[]");
+      let kayitlar = JSON.parse(localStorage.getItem("buobey_barkod_kayitlari_v3") || "[]");
       kayitlar.unshift(yeniKayit);
-      localStorage.setItem("buobey_yapim_kayitlari", JSON.stringify(kayitlar));
+      localStorage.setItem("buobey_barkod_kayitlari_v3", JSON.stringify(kayitlar));
 
-      alert("Başarılı: " + numbers.length + " adet barkod '2. Yapım Aşaması' sekmesine kaydedildi!");
-      
-      // İsteğe bağlı doğrudan 2. sekmeye geçir
-      sekmeDegistir('yapimTab', document.getElementById("btnYapimSekmesi"));
+      alert("Başarılı: " + numbers.length + " adet barkod '2. Kayıtlı Barkodlar' sekmesine arşivlendi.");
+      sekmeDegistir('kayitliTab', document.getElementById("btnKayitliSekmesi"));
     }
 
-    // 7. KAYITLARI LİSTELEME VE İSTATİSTİK
     function kayitlariListele(filtre = "") {
       const container = document.getElementById("recordsContainer");
-      const kayitlar = JSON.parse(localStorage.getItem("buobey_yapim_kayitlari") || "[]");
+      const kayitlar = JSON.parse(localStorage.getItem("buobey_barkod_kayitlari_v3") || "[]");
 
-      // İstatistikleri hesapla
       let toplamBarkod = 0;
       kayitlar.forEach(k => toplamBarkod += k.numaralar.length);
       document.getElementById("statGrupSayisi").textContent = kayitlar.length;
@@ -560,7 +803,7 @@
       }
 
       if (gosterilecek.length === 0) {
-        container.innerHTML = `<div class="empty-state">Henüz kayıtlı barkod grubu yok veya filtrelemeye uygun sonuç bulunamadı.</div>`;
+        container.innerHTML = `<div class="empty-state">Henüz kayıtlı barkod grubu bulunmuyor.</div>`;
         return;
       }
 
@@ -568,7 +811,7 @@
         <div class="record-card">
           <div class="record-header">
             <div>
-              <h4>Kayıt Partisi #${kayitlar.length - index}</h4>
+              <h4>Parti #${kayitlar.length - index}</h4>
               <span style="font-size:0.8rem; color:#94a3b8;">${k.tarih}</span>
             </div>
             <div class="record-badge">${k.numaralar.length} Adet Barkod</div>
@@ -579,9 +822,9 @@
           </div>
 
           <div class="record-actions">
-            <button class="btn btn-success" style="font-size: 0.8rem; padding: 6px 12px;" onclick="kayitPdfIndir(${k.id})">PDF İndir</button>
-            <button class="btn btn-secondary" style="font-size: 0.8rem; padding: 6px 12px;" onclick="kaydiDuzenle(${k.id})">Düzenle / Ekle</button>
-            <button class="btn btn-danger" style="font-size: 0.8rem; padding: 6px 12px;" onclick="kaydiSil(${k.id})">Sil</button>
+            <button class="btn btn-success" style="font-size: 0.8rem; padding: 6px 12px;" onclick="kayitPdfIndir(${k.id})">Yüksek Kalite PDF</button>
+            <button class="btn btn-primary" style="font-size: 0.8rem; padding: 6px 12px;" onclick="modalAc(${k.id})">Düzenle / Ekle / Sil</button>
+            <button class="btn btn-danger" style="font-size: 0.8rem; padding: 6px 12px;" onclick="kayitSil(${k.id})">Sil</button>
           </div>
         </div>
       `).join("");
@@ -592,42 +835,94 @@
       kayitlariListele(val);
     }
 
-    // 8. TEKİL KAYIT İŞLEMLERİ (PDF, DÜZENLE, SİL)
     function kayitPdfIndir(id) {
-      const kayitlar = JSON.parse(localStorage.getItem("buobey_yapim_kayitlari") || "[]");
+      const kayitlar = JSON.parse(localStorage.getItem("buobey_barkod_kayitlari_v3") || "[]");
       const hedef = kayitlar.find(k => k.id === id);
       if (hedef) {
-        pdfUretVeIndir(hedef.numaralar, "barkod-parti-" + hedef.id + ".pdf");
+        profesyonelPdfIndir(hedef.numaralar, "Parti-" + hedef.id);
       }
     }
 
-    function kaydiDuzenle(id) {
-      const kayitlar = JSON.parse(localStorage.getItem("buobey_yapim_kayitlari") || "[]");
-      const hedef = kayitlar.find(k => k.id === id);
-      if (hedef) {
-        // Numaraları 1. sekmedeki alana yükle
-        document.getElementById("barcodeInput").value = hedef.numaralar.join(" ");
-        barkodlariUret();
-        
-        // 1. Sekmeye geri yönlendir
-        sekmeDegistir('barkodTab', document.querySelectorAll(".tab-btn")[0]);
-        alert("Numaralar 1. sekmeye yüklendi. İstediğiniz gibi yeni numara ekleyip tekrar kaydedebilirsiniz.");
-      }
-    }
-
-    function kaydiSil(id) {
-      if (confirm("Bu kayıt grubunu silmek istediğinize emin misiniz?")) {
-        let kayitlar = JSON.parse(localStorage.getItem("buobey_yapim_kayitlari") || "[]");
+    function kayitSil(id) {
+      if (confirm("Bu kayıt grubunu silmek istediğinizden emin misiniz?")) {
+        let kayitlar = JSON.parse(localStorage.getItem("buobey_barkod_kayitlari_v3") || "[]");
         kayitlar = kayitlar.filter(k => k.id !== id);
-        localStorage.setItem("buobey_yapim_kayitlari", JSON.stringify(kayitlar));
+        localStorage.setItem("buobey_barkod_kayitlari_v3", JSON.stringify(kayitlar));
         kayitlariListele();
       }
     }
 
     function tumunuTemizle() {
-      if (confirm("DİKKAT: Yapım aşamasındaki TÜM kayıtlar kalıcı olarak silinecek. Onaylıyor musunuz?")) {
-        localStorage.removeItem("buobey_yapim_kayitlari");
+      if (confirm("DİKKAT: Sistemdeki tüm kayıtlı barkodlar kalıcı olarak silinecektir!")) {
+        localStorage.removeItem("buobey_barkod_kayitlari_v3");
         kayitlariListele();
+      }
+    }
+
+    // 7. YERİNDE (MODAL) DÜZENLEME MOTORU
+    let aktifDuzenlenenId = null;
+    let geciciNumaralar = [];
+
+    function modalAc(id) {
+      const kayitlar = JSON.parse(localStorage.getItem("buobey_barkod_kayitlari_v3") || "[]");
+      const hedef = kayitlar.find(k => k.id === id);
+      if (!hedef) return;
+
+      aktifDuzenlenenId = id;
+      geciciNumaralar = [...hedef.numaralar];
+      modalRenderChips();
+      document.getElementById("editModal").style.display = "flex";
+    }
+
+    function modalKapat() {
+      document.getElementById("editModal").style.display = "none";
+      aktifDuzenlenenId = null;
+      geciciNumaralar = [];
+    }
+
+    function modalRenderChips() {
+      const container = document.getElementById("modalChipContainer");
+      if (geciciNumaralar.length === 0) {
+        container.innerHTML = `<span style="color:#64748b; font-size:0.85rem;">Bu partide barkod kalmadı. Yeni ekleyin veya iptal edin.</span>`;
+        return;
+      }
+      container.innerHTML = geciciNumaralar.map((num, i) => `
+        <div class="modal-chip">
+          ${num}
+          <span onclick="modalNumaraSil(${i})">&times;</span>
+        </div>
+      `).join("");
+    }
+
+    function modalNumaraSil(index) {
+      geciciNumaralar.splice(index, 1);
+      modalRenderChips();
+    }
+
+    function modalNumaraEkle() {
+      const input = document.getElementById("modalNewNum");
+      const val = input.value.trim();
+      if (!val) return;
+
+      const eklenecekler = parseNumbers(val);
+      geciciNumaralar.push(...eklenecekler);
+      input.value = "";
+      modalRenderChips();
+    }
+
+    function modalKaydet() {
+      if (geciciNumaralar.length === 0) {
+        alert("En az bir barkod kalmalıdır. Partiyi silmek istiyorsanız dışarıdaki sil butonunu kullanabilirsiniz.");
+        return;
+      }
+
+      let kayitlar = JSON.parse(localStorage.getItem("buobey_barkod_kayitlari_v3") || "[]");
+      const index = kayitlar.findIndex(k => k.id === aktifDuzenlenenId);
+      if (index !== -1) {
+        kayitlar[index].numaralar = geciciNumaralar;
+        localStorage.setItem("buobey_barkod_kayitlari_v3", JSON.stringify(kayitlar));
+        kayitlariListele();
+        modalKapat();
       }
     }
   </script>
