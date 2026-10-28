@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buobey - Giriş Paneli</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    body {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #f8fafc;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .card {
+      background: rgba(30, 41, 59, 0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 40px 30px;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      text-align: center;
+    }
+    h2 {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+      color: #38bdf8;
+    }
+    p.subtext {
+      color: #94a3b8;
+      font-size: 0.9rem;
+      margin-bottom: 25px;
+    }
+    .input-group {
+      margin-bottom: 15px;
+      text-align: left;
+    }
+    label {
+      display: block;
+      font-size: 0.85rem;
+      color: #cbd5e1;
+      margin-bottom: 6px;
+    }
+    input {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 8px;
+      border: 1px solid #334155;
+      background: #0f172a;
+      color: #fff;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    input:focus {
+      border-color: #38bdf8;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #0284c7;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: #0369a1;
+    }
+    .error-msg {
+      color: #f87171;
+      font-size: 0.85rem;
+      margin-top: 12px;
+      display: none;
+    }
+    .dashboard {
+      display: none;
+    }
+    .dashboard h3 {
+      color: #4ade80;
+      font-size: 1.5rem;
+      margin-bottom: 12px;
+    }
+    .logout-btn {
+      background: #475569;
+      margin-top: 20px;
+    }
+    .logout-btn:hover {
+      background: #334155;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- GİRİŞ FORMU -->
+  <div class="card" id="loginCard">
+    <h2>Buobey Portal</h2>
+    <p class="subtext">Lütfen giriş bilgilerinizi girin</p>
+    
+    <div class="input-group">
+      <label>Kullanıcı Adı</label>
+      <input type="text" id="username" placeholder="Kullanıcı adınızı yazın">
+    </div>
+
+    <div class="input-group">
+      <label>Şifre</label>
+      <input type="password" id="password" placeholder="Şifrenizi yazın">
+    </div>
+
+    <button onclick="girisYap()">Giriş Yap</button>
+    <p id="hata" class="error-msg">Kullanıcı adı veya şifre yanlış!</p>
+  </div>
+
+  <!-- GİRİŞTEN SONRA AÇILAN PANEL -->
+  <div class="card dashboard" id="dashboardCard">
+    <h3>Giriş Başarılı!</h3>
+    <p style="color: #cbd5e1; margin-top: 8px;">Hoş geldin patron. Burası senin özel yönetim alanın.</p>
+    <p style="color: #94a3b8; font-size: 0.85rem; margin-top: 15px;">Site içeriğini buradan adım adım birlikte inşa edeceğiz.</p>
+    <button class="logout-btn" onclick="cikisYap()">Çıkış Yap</button>
+  </div>
+
+  <script>
+    function girisYap() {
+      const u = document.getElementById("username").value.trim();
+      const p = document.getElementById("password").value.trim();
+      const hata = document.getElementById("hata");
+      const loginCard = document.getElementById("loginCard");
+      const dashCard = document.getElementById("dashboardCard");
+
+      // Kullanıcı adı ve şifre kontrolü
+      if (u === "buobey" && p === "admin") {
+        hata.style.display = "none";
+        loginCard.style.display = "none";
+        dashCard.style.display = "block";
+      } else {
+        hata.style.display = "block";
+      }
+    }
+
+    function cikisYap() {
+      document.getElementById("username").value = "";
+      document.getElementById("password").value = "";
+      document.getElementById("dashboardCard").style.display = "none";
+      document.getElementById("loginCard").style.display = "block";
+    }
+  </script>
+
+</body>
+</html>
