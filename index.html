@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Buobey - Yönetim Paneli</title>
+  <title>Buobey - Üretim ve Barkod Paneli</title>
   
   <!-- Barkod ve PDF Kütüphaneleri -->
   <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
@@ -27,7 +27,6 @@
       padding: 20px;
     }
 
-    /* Giriş Kartı */
     .login-container {
       width: 100%;
       max-width: 400px;
@@ -37,7 +36,7 @@
       background: rgba(17, 24, 39, 0.85);
       backdrop-filter: blur(16px);
       border: 1px solid rgba(255, 255, 255, 0.08);
-      padding: 35px 25px;
+      padding: 30px 24px;
       border-radius: 20px;
       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
     }
@@ -88,43 +87,24 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 12px 20px;
-      border-radius: 10px;
-      font-size: 0.95rem;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 0.9rem;
       font-weight: 600;
       cursor: pointer;
       border: none;
       transition: all 0.2s;
-      gap: 8px;
+      gap: 6px;
     }
 
-    .btn-primary {
-      background: #0284c7;
-      color: #fff;
-      width: 100%;
-    }
-
-    .btn-primary:hover {
-      background: #0369a1;
-    }
-
-    .btn-secondary {
-      background: #374151;
-      color: #f3f4f6;
-    }
-
-    .btn-secondary:hover {
-      background: #4b5563;
-    }
-
-    .btn-success {
-      background: #059669;
-      color: #fff;
-    }
-
-    .btn-success:hover {
-      background: #047857;
-    }
+    .btn-primary { background: #0284c7; color: #fff; }
+    .btn-primary:hover { background: #0369a1; }
+    .btn-secondary { background: #374151; color: #f3f4f6; }
+    .btn-secondary:hover { background: #4b5563; }
+    .btn-success { background: #059669; color: #fff; }
+    .btn-success:hover { background: #047857; }
+    .btn-danger { background: #dc2626; color: #fff; }
+    .btn-danger:hover { background: #b91c1c; }
 
     .error-msg {
       color: #f87171;
@@ -134,11 +114,10 @@
       display: none;
     }
 
-    /* Ana Dashboard */
     .dashboard-container {
       display: none;
       width: 100%;
-      max-width: 950px;
+      max-width: 1000px;
     }
 
     .dash-header {
@@ -152,7 +131,7 @@
 
     .nav-tabs {
       display: flex;
-      gap: 10px;
+      gap: 8px;
       background: rgba(17, 24, 39, 0.6);
       padding: 6px;
       border-radius: 12px;
@@ -163,7 +142,7 @@
       background: transparent;
       border: none;
       color: #94a3b8;
-      padding: 10px 18px;
+      padding: 10px 16px;
       border-radius: 8px;
       cursor: pointer;
       font-weight: 600;
@@ -176,26 +155,14 @@
       color: #fff;
     }
 
-    .tab-content {
-      display: none;
-    }
-
-    .tab-content.active {
-      display: block;
-    }
-
-    /* Barkod Bölümü */
-    .barcode-controls {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      margin-bottom: 25px;
-    }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
 
     .btn-row {
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
+      margin-top: 10px;
     }
 
     .barcode-grid {
@@ -207,46 +174,104 @@
 
     .barcode-item {
       background: #ffffff;
-      padding: 15px;
-      border-radius: 12px;
+      padding: 12px;
+      border-radius: 10px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
     }
 
-    .barcode-item svg {
+    .barcode-item canvas {
       max-width: 100%;
       height: auto;
     }
 
-    /* Kayıtlı Geçmiş */
-    .history-card {
+    /* İstatistik sayaçları */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .stat-box {
       background: #1e293b;
+      padding: 15px 20px;
       border-radius: 12px;
-      padding: 15px;
-      margin-top: 15px;
+      border-left: 4px solid #38bdf8;
+    }
+
+    .stat-box span {
+      font-size: 0.8rem;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .stat-box strong {
+      display: block;
+      font-size: 1.6rem;
+      color: #f8fafc;
+      margin-top: 4px;
+    }
+
+    /* 2. Sekmedeki Kayıt Kartları */
+    .record-card {
+      background: #1e293b;
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 15px;
       border: 1px solid rgba(255, 255, 255, 0.05);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
     }
 
-    .history-card h4 {
+    .record-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 10px;
+    }
+
+    .record-header h4 {
       color: #38bdf8;
-      font-size: 0.95rem;
-      margin-bottom: 8px;
+      font-size: 1rem;
     }
 
-    .history-tags {
+    .record-badge {
+      background: rgba(56, 189, 248, 0.15);
+      color: #38bdf8;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .record-numbers {
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
     }
 
-    .history-tag {
+    .num-pill {
       background: #0f172a;
       color: #cbd5e1;
       font-size: 0.8rem;
-      padding: 4px 8px;
+      padding: 5px 10px;
       border-radius: 6px;
+      border: 1px solid #334155;
+    }
+
+    .record-actions {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+      flex-wrap: wrap;
     }
 
     .empty-state {
@@ -258,94 +283,100 @@
 </head>
 <body>
 
-  <!-- GİRİŞ FORMU -->
+  <!-- 1. GİRİŞ FORMU -->
   <div class="login-container" id="loginArea">
     <div class="card">
       <h2>Buobey Portal</h2>
-      <p class="subtext">Sisteme erişmek için kimliğinizi doğrulayın</p>
+      <p class="subtext">Devam etmek için giriş yapın</p>
       
       <div class="input-group">
         <label>Kullanıcı Adı</label>
-        <input type="text" id="username" placeholder="buobey" autocomplete="off">
+        <input type="text" id="username" placeholder="Kullanıcı adınız" autocomplete="off">
       </div>
 
       <div class="input-group">
         <label>Şifre</label>
-        <input type="password" id="password" placeholder="admin">
+        <input type="password" id="password" placeholder="••••••••" onkeydown="if(event.key==='Enter') girisYap()">
       </div>
 
-      <button class="btn btn-primary" onclick="girisYap()">Giriş Yap</button>
+      <button class="btn btn-primary" style="width: 100%;" onclick="girisYap()">Giriş Yap</button>
       <p id="hata" class="error-msg">Kullanıcı adı veya şifre hatalı!</p>
     </div>
   </div>
 
-  <!-- KONTROL PANELİ -->
+  <!-- 2. KONTROL PANELİ -->
   <div class="dashboard-container" id="dashArea">
     
     <div class="dash-header">
       <div class="nav-tabs">
-        <button class="tab-btn active" onclick="sekmeDegistir('barkodTab', this)">1. Barkod</button>
-        <button class="tab-btn" onclick="sekmeDegistir('yapimTab', this)">2. Yapım Aşaması</button>
+        <button class="tab-btn active" onclick="sekmeDegistir('barkodTab', this)">1. Barkod Üretici</button>
+        <button class="tab-btn" onclick="sekmeDegistir('yapimTab', this)" id="btnYapimSekmesi">2. Yapım Aşaması</button>
         <button class="tab-btn" onclick="sekmeDegistir('yapisTab', this)">3. Yapış Aşaması</button>
       </div>
       <button class="btn btn-secondary" onclick="cikisYap()">Çıkış Yap</button>
     </div>
 
-    <!-- 1. SEKME: BARKOD -->
+    <!-- 1. SEKME: BARKOD ÜRETİCİ -->
     <div id="barkodTab" class="tab-content active">
       <div class="card">
-        <h3 style="color: #38bdf8; margin-bottom: 10px;">Hızlı Çoklu Barkod Üretici</h3>
-        <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 15px;">
+        <h3 style="color: #38bdf8; margin-bottom: 6px;">Hızlı Barkod Üretimi</h3>
+        <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 15px;">
           Numaraları aralarında boşluk bırakarak veya alt alta yazın (Örnek: 123 456 789).
         </p>
 
-        <div class="barcode-controls">
-          <textarea id="barcodeInput" rows="3" placeholder="Numaraları buraya girin..." oninput="barkodlariUret()"></textarea>
-          
-          <div class="btn-row">
-            <button class="btn btn-success" onclick="pdfIndir()">PDF Olarak İndir</button>
-            <button class="btn btn-secondary" onclick="kaydetGecmise()">Koleksiyonu Kaydet</button>
-            <button class="btn btn-secondary" onclick="temizle()">Temizle</button>
-          </div>
-        </div>
-
-        <div id="barcodeOutput" class="barcode-grid">
-          <!-- Üretilen barkodlar anında buraya basılır -->
-        </div>
-
-        <!-- Kaydedilen Barkod Geçmişi -->
-        <hr style="border: 0; border-top: 1px solid #374151; margin: 30px 0 20px;">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-          <h3 style="color: #cbd5e1; font-size: 1.1rem;">Kayıtlı Barkod Geçmişi</h3>
-          <button class="btn btn-secondary" style="font-size: 0.75rem; padding: 6px 10px;" onclick="gecmisiTemizle()">Geçmişi Sıfırla</button>
-        </div>
+        <textarea id="barcodeInput" rows="3" placeholder="Numaraları buraya girin..." oninput="barkodlariUret()"></textarea>
         
-        <div id="historyList">
-          <!-- Kaydedilenler buraya gelir -->
+        <div class="btn-row">
+          <button class="btn btn-success" onclick="anlikPdfIndir()">PDF Olarak İndir</button>
+          <button class="btn btn-primary" onclick="yapimAsamasinaKaydet()">Yapım Aşamasına Kaydet</button>
+          <button class="btn btn-secondary" onclick="ornekDoldur()">Örnek Numaralar Ekle</button>
+          <button class="btn btn-secondary" onclick="temizle()">Temizle</button>
         </div>
+
+        <div id="barcodeOutput" class="barcode-grid"></div>
       </div>
     </div>
 
-    <!-- 2. SEKME: YAPIM AŞAMASI -->
+    <!-- 2. SEKME: YAPIM AŞAMASI (KAYITLAR VE TAKİP) -->
     <div id="yapimTab" class="tab-content">
-      <div class="card empty-state">
-        <h3 style="color: #38bdf8; margin-bottom: 10px;">Yapım Aşaması</h3>
-        <p>Burası 2. modülün içerikleri için hazırlandı. Ne eklemek istediğini söylediğinde burayı dolduracağız.</p>
+      <div class="stats-row">
+        <div class="stat-box">
+          <span>Toplam Kayıt Grubu</span>
+          <strong id="statGrupSayisi">0</strong>
+        </div>
+        <div class="stat-box" style="border-left-color: #10b981;">
+          <span>Üretilen Toplam Barkod</span>
+          <strong id="statBarkodSayisi">0</strong>
+        </div>
+      </div>
+
+      <div class="card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
+          <div>
+            <h3 style="color: #38bdf8;">Yapım Aşaması / Kayıtlı Barkodlar</h3>
+            <p style="color: #94a3b8; font-size: 0.85rem;">Kaydedilen partileri inceleyebilir, indirebilir veya yeniden düzenleyebilirsiniz.</p>
+          </div>
+          <button class="btn btn-danger" style="font-size: 0.8rem;" onclick="tumunuTemizle()">Tüm Kayıtları Sıfırla</button>
+        </div>
+
+        <input type="text" id="aramaKutusu" placeholder="Tarih veya numara ile ara..." oninput="kayitlariFiltrele()" style="margin-bottom: 15px;">
+
+        <div id="recordsContainer"></div>
       </div>
     </div>
 
     <!-- 3. SEKME: YAPIŞ AŞAMASI -->
     <div id="yapisTab" class="tab-content">
       <div class="card empty-state">
-        <h3 style="color: #38bdf8; margin-bottom: 10px;">Yapış Aşaması</h3>
-        <p>Burası 3. modülün içerikleri için hazırlandı. Adımları ve kontrol listesini birlikte ekleyebiliriz.</p>
+        <h3 style="color: #38bdf8; margin-bottom: 10px;">3. Yapış Aşaması</h3>
+        <p>Burası montaj, barkod yapıştırma ve paketleme kontrol aşaması için ayrılmıştır.</p>
       </div>
     </div>
 
   </div>
 
   <script>
-    // GİRİŞ / ÇIKIŞ MANTIĞI
+    // 1. KULLANICI GİRİŞ/ÇIKIŞ KONTROLÜ
     function girisYap() {
       const u = document.getElementById("username").value.trim();
       const p = document.getElementById("password").value.trim();
@@ -355,7 +386,7 @@
         hata.style.display = "none";
         document.getElementById("loginArea").style.display = "none";
         document.getElementById("dashArea").style.display = "block";
-        gecmisiYukle();
+        kayitlariListele();
       } else {
         hata.style.display = "block";
       }
@@ -368,21 +399,25 @@
       document.getElementById("loginArea").style.display = "block";
     }
 
-    // SEKME DEĞİŞTİRME
+    // 2. SEKME DEĞİŞTİRME
     function sekmeDegistir(tabId, btn) {
       document.querySelectorAll(".tab-content").forEach(el => el.classList.remove("active"));
       document.querySelectorAll(".tab-btn").forEach(el => el.classList.remove("active"));
 
       document.getElementById(tabId).classList.add("active");
-      btn.classList.add("active");
+      if (btn) btn.classList.add("active");
+
+      if (tabId === "yapimTab") {
+        kayitlariListele();
+      }
     }
 
-    // NUMARALARI PARSE ETME (Boşluk, virgül, yeni satır)
+    // 3. NUMARALARI AYIKLAMA (Boşluk, virgül, alt satır)
     function parseNumbers(input) {
       return input.split(/[\s,]+/).map(s => s.trim()).filter(s => s.length > 0);
     }
 
-    // ANLIK BARKOD ÜRETİCİ
+    // 4. ANLIK BARKOD ÇİZİMİ (HTML5 Canvas ile)
     function barkodlariUret() {
       const raw = document.getElementById("barcodeInput").value;
       const numbers = parseNumbers(raw);
@@ -393,22 +428,23 @@
         const item = document.createElement("div");
         item.className = "barcode-item";
 
-        const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        svg.id = "barcode-" + index;
-        item.appendChild(svg);
+        const canvas = document.createElement("canvas");
+        canvas.id = "barcode-canvas-" + index;
+        item.appendChild(canvas);
         container.appendChild(item);
 
         try {
-          JsBarcode(svg, val, {
+          JsBarcode(canvas, val, {
             format: "CODE128",
             lineColor: "#000",
             width: 2,
             height: 60,
             displayValue: true,
-            fontSize: 14
+            fontSize: 14,
+            background: "#ffffff"
           });
         } catch (e) {
-          item.innerHTML = `<span style="color:#ef4444; font-size:0.8rem;">Geçersiz: ${val}</span>`;
+          item.innerHTML = `<span style="color:#ef4444; font-size:0.8rem;">Hatalı Barkod: ${val}</span>`;
         }
       });
     }
@@ -418,91 +454,180 @@
       document.getElementById("barcodeOutput").innerHTML = "";
     }
 
-    // PDF İNDİRME
-    function pdfIndir() {
-      const svgs = document.querySelectorAll("#barcodeOutput svg");
-      if (svgs.length === 0) {
-        alert("Lütfen önce geçerli bir numara girin.");
+    function ornekDoldur() {
+      document.getElementById("barcodeInput").value = "123456 789012 345678";
+      barkodlariUret();
+    }
+
+    // 5. GÜVENLİ VE GARANTİLİ PDF ÜRETİCİSİ
+    function pdfUretVeIndir(numaralar, dosyaAdi) {
+      if (!numaralar || numaralar.length === 0) {
+        alert("İndirilecek geçerli barkod bulunamadı.");
         return;
       }
 
       const { jsPDF } = window.jspdf;
-      const pdf = new jsPDF();
-      let y = 20;
-
+      const pdf = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+      
+      let y = 25;
       pdf.setFontSize(16);
-      pdf.text("Buobey Barkod Ciktisi", 14, 15);
+      pdf.text("Buobey Barkod Listesi", 15, 15);
       pdf.setFontSize(10);
-      pdf.text("Tarih: " + new Date().toLocaleString("tr-TR"), 14, y);
-      y += 15;
+      pdf.text("Uretim Tarihi: " + new Date().toLocaleString("tr-TR"), 15, y);
+      pdf.text("Toplam Barkod: " + numaralar.length + " Adet", 150, y);
+      y += 10;
+      pdf.line(15, y, 195, y);
+      y += 10;
 
-      svgs.forEach((svg, index) => {
-        const xml = new XMLSerializer().serializeToString(svg);
-        const svg64 = btoa(unescape(encodeURIComponent(xml)));
-        const image64 = "data:image/svg+xml;base64," + svg64;
+      numaralar.forEach((num, i) => {
+        // Geçici gizli bir canvas oluşturup barkodu çiziyoruz
+        const tempCanvas = document.createElement("canvas");
+        try {
+          JsBarcode(tempCanvas, num, {
+            format: "CODE128",
+            width: 2,
+            height: 50,
+            displayValue: true,
+            fontSize: 14,
+            background: "#ffffff"
+          });
 
-        const img = new Image();
-        img.src = image64;
+          const imgData = tempCanvas.toDataURL("image/jpeg", 1.0);
 
-        // Sayfa taşma kontrolü
-        if (y + 35 > 280) {
-          pdf.addPage();
-          y = 20;
+          if (y + 35 > 280) {
+            pdf.addPage();
+            y = 20;
+          }
+
+          pdf.addImage(imgData, "JPEG", 15, y, 65, 25);
+          y += 32;
+        } catch (err) {
+          console.error("Barkod çizim hatası:", err);
         }
-
-        pdf.addImage(img, "PNG", 14, y, 70, 30);
-        y += 35;
       });
 
-      pdf.save("buobey-barkodlar-" + Date.now() + ".pdf");
+      pdf.save(dosyaAdi || ("barkodlar-" + Date.now() + ".pdf"));
     }
 
-    // TARİH/SAAT İLE KAYDETME (LocalStorage)
-    function kaydetGecmise() {
+    function anlikPdfIndir() {
+      const numbers = parseNumbers(document.getElementById("barcodeInput").value);
+      pdfUretVeIndir(numbers, "buobey-anlik-barkodlar.pdf");
+    }
+
+    // 6. YAPIM AŞAMASINA KAYIT İŞLEMLERİ
+    function yapimAsamasinaKaydet() {
       const raw = document.getElementById("barcodeInput").value;
       const numbers = parseNumbers(raw);
 
       if (numbers.length === 0) {
-        alert("Kaydedilecek numara bulunamadı.");
+        alert("Kaydedilecek en az 1 numara girmelisiniz.");
         return;
       }
 
-      const kayit = {
+      const yeniKayit = {
+        id: Date.now(),
         tarih: new Date().toLocaleString("tr-TR"),
         numaralar: numbers
       };
 
-      let history = JSON.parse(localStorage.getItem("buobey_barkod_kayitlari") || "[]");
-      history.unshift(kayit);
-      localStorage.setItem("buobey_barkod_kayitlari", JSON.stringify(history));
+      let kayitlar = JSON.parse(localStorage.getItem("buobey_yapim_kayitlari") || "[]");
+      kayitlar.unshift(yeniKayit);
+      localStorage.setItem("buobey_yapim_kayitlari", JSON.stringify(kayitlar));
 
-      gecmisiYukle();
-      alert("Barkodlar o anki tarih ve saatle kaydedildi!");
+      alert("Başarılı: " + numbers.length + " adet barkod '2. Yapım Aşaması' sekmesine kaydedildi!");
+      
+      // İsteğe bağlı doğrudan 2. sekmeye geçir
+      sekmeDegistir('yapimTab', document.getElementById("btnYapimSekmesi"));
     }
 
-    function gecmisiYukle() {
-      const historyList = document.getElementById("historyList");
-      const history = JSON.parse(localStorage.getItem("buobey_barkod_kayitlari") || "[]");
+    // 7. KAYITLARI LİSTELEME VE İSTATİSTİK
+    function kayitlariListele(filtre = "") {
+      const container = document.getElementById("recordsContainer");
+      const kayitlar = JSON.parse(localStorage.getItem("buobey_yapim_kayitlari") || "[]");
 
-      if (history.length === 0) {
-        historyList.innerHTML = `<p style="color:#64748b; font-size:0.85rem; margin-top:10px;">Henüz kayıtlı barkod grubu bulunmuyor.</p>`;
+      // İstatistikleri hesapla
+      let toplamBarkod = 0;
+      kayitlar.forEach(k => toplamBarkod += k.numaralar.length);
+      document.getElementById("statGrupSayisi").textContent = kayitlar.length;
+      document.getElementById("statBarkodSayisi").textContent = toplamBarkod;
+
+      let gosterilecek = kayitlar;
+      if (filtre) {
+        gosterilecek = kayitlar.filter(k => 
+          k.tarih.toLowerCase().includes(filtre.toLowerCase()) ||
+          k.numaralar.some(n => n.includes(filtre))
+        );
+      }
+
+      if (gosterilecek.length === 0) {
+        container.innerHTML = `<div class="empty-state">Henüz kayıtlı barkod grubu yok veya filtrelemeye uygun sonuç bulunamadı.</div>`;
         return;
       }
 
-      historyList.innerHTML = history.map((item, idx) => `
-        <div class="history-card">
-          <h4>Kayıt #${history.length - idx} &bull; ${item.tarih}</h4>
-          <div class="history-tags">
-            ${item.numaralar.map(n => `<span class="history-tag">${n}</span>`).join("")}
+      container.innerHTML = gosterilecek.map((k, index) => `
+        <div class="record-card">
+          <div class="record-header">
+            <div>
+              <h4>Kayıt Partisi #${kayitlar.length - index}</h4>
+              <span style="font-size:0.8rem; color:#94a3b8;">${k.tarih}</span>
+            </div>
+            <div class="record-badge">${k.numaralar.length} Adet Barkod</div>
+          </div>
+          
+          <div class="record-numbers">
+            ${k.numaralar.map(n => `<span class="num-pill">${n}</span>`).join("")}
+          </div>
+
+          <div class="record-actions">
+            <button class="btn btn-success" style="font-size: 0.8rem; padding: 6px 12px;" onclick="kayitPdfIndir(${k.id})">PDF İndir</button>
+            <button class="btn btn-secondary" style="font-size: 0.8rem; padding: 6px 12px;" onclick="kaydiDuzenle(${k.id})">Düzenle / Ekle</button>
+            <button class="btn btn-danger" style="font-size: 0.8rem; padding: 6px 12px;" onclick="kaydiSil(${k.id})">Sil</button>
           </div>
         </div>
       `).join("");
     }
 
-    function gecmisiTemizle() {
-      if (confirm("Kayıtlı tüm barkod geçmişi silinsin mi?")) {
-        localStorage.removeItem("buobey_barkod_kayitlari");
-        gecmisiYukle();
+    function kayitlariFiltrele() {
+      const val = document.getElementById("aramaKutusu").value;
+      kayitlariListele(val);
+    }
+
+    // 8. TEKİL KAYIT İŞLEMLERİ (PDF, DÜZENLE, SİL)
+    function kayitPdfIndir(id) {
+      const kayitlar = JSON.parse(localStorage.getItem("buobey_yapim_kayitlari") || "[]");
+      const hedef = kayitlar.find(k => k.id === id);
+      if (hedef) {
+        pdfUretVeIndir(hedef.numaralar, "barkod-parti-" + hedef.id + ".pdf");
+      }
+    }
+
+    function kaydiDuzenle(id) {
+      const kayitlar = JSON.parse(localStorage.getItem("buobey_yapim_kayitlari") || "[]");
+      const hedef = kayitlar.find(k => k.id === id);
+      if (hedef) {
+        // Numaraları 1. sekmedeki alana yükle
+        document.getElementById("barcodeInput").value = hedef.numaralar.join(" ");
+        barkodlariUret();
+        
+        // 1. Sekmeye geri yönlendir
+        sekmeDegistir('barkodTab', document.querySelectorAll(".tab-btn")[0]);
+        alert("Numaralar 1. sekmeye yüklendi. İstediğiniz gibi yeni numara ekleyip tekrar kaydedebilirsiniz.");
+      }
+    }
+
+    function kaydiSil(id) {
+      if (confirm("Bu kayıt grubunu silmek istediğinize emin misiniz?")) {
+        let kayitlar = JSON.parse(localStorage.getItem("buobey_yapim_kayitlari") || "[]");
+        kayitlar = kayitlar.filter(k => k.id !== id);
+        localStorage.setItem("buobey_yapim_kayitlari", JSON.stringify(kayitlar));
+        kayitlariListele();
+      }
+    }
+
+    function tumunuTemizle() {
+      if (confirm("DİKKAT: Yapım aşamasındaki TÜM kayıtlar kalıcı olarak silinecek. Onaylıyor musunuz?")) {
+        localStorage.removeItem("buobey_yapim_kayitlari");
+        kayitlariListele();
       }
     }
   </script>
